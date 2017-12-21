@@ -16,12 +16,6 @@ lazy_static! {
 pub fn generate_slug(num_adjectives: u8, id_range: std::ops::Range<u64>) -> io::Result<String> {
     let mut rng = rand::os::OsRng::new()?;
 
-    let mut slug = String::new();
-
-    for _ in 0 .. num_adjectives {
-        slug.push_str(rng.choose(&ADJECTIVES).unwrap());
-    }
-
     let adjectives: Vec<&str> = (0 .. num_adjectives).map(|_| *rng.choose(&ADJECTIVES).unwrap()).collect();
     let noun: &str = *rng.choose(&ANIMALS).unwrap();
     let id = rng.gen_range(id_range.start, id_range.end);
