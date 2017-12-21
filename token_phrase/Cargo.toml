@@ -1,0 +1,8 @@
+[package]
+name = "token_phrase"
+version = "0.1.0"
+authors = ["Pascal Hartig <phartig@rdrei.net>"]
+
+[dependencies]
+rand = "0.4.1"
+lazy_static = "1.0.0"
