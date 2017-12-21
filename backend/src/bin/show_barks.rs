@@ -1,4 +1,4 @@
-extern crate barkbin;
+extern crate barkbin_backend as barkbin;
 extern crate diesel;
 
 use self::barkbin::db::models::*;
