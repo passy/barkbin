@@ -15,4 +15,6 @@ pub struct Bark {
 pub struct NewBark<'a> {
     pub filename: &'a str,
     pub body: &'a str,
+    pub slug: &'a str,
+    pub datetime: &'a chrono::NaiveDateTime,
 }

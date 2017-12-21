@@ -1,12 +1,15 @@
 use diesel;
 use diesel::prelude::*;
 use diesel::sqlite::SqliteConnection;
+use diesel::result::Error::DatabaseError;
 use dotenv::dotenv;
 use std::env;
 use failure::{Error, err_msg};
+use chrono::Utc;
 
 pub mod schema;
 pub mod models;
+pub mod errors;
 
 pub fn establish_connection() -> Result<SqliteConnection, Error> {
     dotenv().ok();
@@ -18,17 +21,31 @@ pub fn establish_connection() -> Result<SqliteConnection, Error> {
         .map_err(|e| format_err!("Failed to open database {}: {}", database_url, e))
 }
 
-pub fn create_bark<'a>(conn: &SqliteConnection, filename: &'a str, body: &'a str) -> usize {
+pub fn create_bark<'a>(conn: &SqliteConnection, filename: &'a str, body: &'a str) -> Result<usize, errors::DBError> {
     use db::schema::barks;
+    use diesel::result::DatabaseErrorKind::*;
 
     let new_bark = models::NewBark {
         filename: filename,
         body: body,
+        slug: "test",
+        datetime: &Utc::now().naive_utc(),
     };
 
-    diesel::insert_into(barks::table)
-        .values(&new_bark)
-        .execute(conn)
-        // TODO: failure.
-        .expect("Error saving bark.")
+    // TODO: Configure the number of attempts somehow?
+    for _ in 0 .. 4 {
+        let res = diesel::insert_into(barks::table)
+            .values(&new_bark)
+            .execute(conn);
+
+        match res {
+            Err(err) => match err {
+                DatabaseError(UniqueViolation, _) => continue,
+                err => return Err(err.into()),
+            }
+            Ok(o) => return Ok(o),
+        };
+    }
+
+    Err(errors::DBError::UniquenessSaveError)
 }
