@@ -1,7 +1,7 @@
 table! {
     barks (id) {
         id -> Integer,
-        uuid -> Binary,
+        slug -> Text,
         filename -> Text,
         body -> Text,
         datetime -> Timestamp,
