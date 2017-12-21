@@ -4,6 +4,9 @@ use dotenv::dotenv;
 use std::env;
 use failure::{Error, err_msg};
 
+pub mod schema;
+pub mod models;
+
 // TODO: Use error-chain or failure here.
 pub fn establish_connection() -> Result<SqliteConnection, Error> {
     dotenv().ok();

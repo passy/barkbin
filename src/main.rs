@@ -4,6 +4,7 @@
 extern crate rocket;
 #[macro_use] extern crate failure;
 #[macro_use] extern crate diesel;
+#[macro_use] extern crate diesel_infer_schema;
 extern crate dotenv;
 
 mod db;
