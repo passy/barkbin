@@ -35,7 +35,7 @@ version = "0.1.0"
 dependencies = [
  "diesel 1.0.0-beta1 (registry+https://github.com/rust-lang/crates.io-index)",
  "diesel_infer_schema 1.0.0-beta1 (registry+https://github.com/rust-lang/crates.io-index)",
- "dotenv 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "dotenv 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "failure 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "rocket 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "rocket_codegen 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -137,14 +137,6 @@ dependencies = [
 
 [[package]]
 name = "dotenv"
-version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-dependencies = [
- "regex 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "dotenv"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
@@ -162,6 +154,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "error-chain"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "backtrace 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "failure"
@@ -692,7 +687,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum diesel_derives 1.0.0-beta1 (registry+https://github.com/rust-lang/crates.io-index)" = "d17adb754297df2557f86b7bfaf479e6e5d6433f6c551a01628e5ceed13ba240"
 "checksum diesel_infer_schema 1.0.0-beta1 (registry+https://github.com/rust-lang/crates.io-index)" = "5d0a245c96000569e55467fc861529c993c694b33ffb8edf4202d4384f57387c"
 "checksum dotenv 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)" = "d6f0e2bb24d163428d8031d3ebd2d2bd903ad933205a97d0f18c7c1aade380f3"
-"checksum dotenv 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = "400b347fe65ccfbd8f545c9d9a75d04b0caf23fec49aaa838a9a05398f94c019"
 "checksum either 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "740178ddf48b1a9e878e6d6509a1442a2d42fd2928aae8e7a6f8a36fb01981b3"
 "checksum error-chain 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d9435d864e017c3c6afeac1654189b06cdb491cf2ff73dbf0d73b0f292f42ff8"
 "checksum failure 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "934799b6c1de475a012a02dab0ace1ace43789ee4b99bcfbf1a2e3e8ced5de82"

@@ -1,7 +1,7 @@
 #[derive(Queryable)]
 pub struct Bark {
-    id: i32,
-    uuid: String,
-    filename: String,
-    body: String,
+    pub id: i32,
+    pub uuid: Vec<u8>,
+    pub filename: String,
+    pub body: String,
 }

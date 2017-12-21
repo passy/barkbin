@@ -1,1 +1,8 @@
-infer_schema!("dotenv:DATABASE_URL");
+table! {
+    barks (id) {
+        id -> Integer,
+        uuid -> Binary,
+        filename -> Text,
+        body -> Text,
+    }
+}
