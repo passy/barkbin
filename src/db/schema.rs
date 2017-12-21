@@ -4,5 +4,6 @@ table! {
         uuid -> Binary,
         filename -> Text,
         body -> Text,
+        datetime -> Timestamp,
     }
 }

@@ -4,9 +4,9 @@ version = "0.1.0"
 authors = ["Pascal Hartig <phartig@rdrei.net>"]
 
 [dependencies]
-rocket = "0.3.5"
-rocket_codegen = "0.3.5"
-diesel = { version = "1.0.0-beta1", features = ["sqlite"] }
-diesel_infer_schema = { version = "1.0.0-beta1", features = ["sqlite"] }
+chrono = "0.4.0"
+diesel = { version = "1.0.0-beta1", features = ["sqlite", "chrono"] }
 dotenv = "0.10.1"
 failure = "0.1.1"
+rocket = "0.3.5"
+rocket_codegen = "0.3.5"
