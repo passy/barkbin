@@ -4,3 +4,6 @@ members = [
     "backend",
     "token_phrase",
 ]
+
+[replace]
+"token_phrase:0.1.0" = { path = "token_phrase" }

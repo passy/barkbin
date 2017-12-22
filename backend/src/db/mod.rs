@@ -1,3 +1,5 @@
+extern crate token_phrase;
+
 use diesel;
 use diesel::prelude::*;
 use diesel::sqlite::SqliteConnection;
@@ -25,15 +27,14 @@ pub fn create_bark<'a>(conn: &SqliteConnection, filename: &'a str, body: &'a str
     use db::schema::barks;
     use diesel::result::DatabaseErrorKind::*;
 
-    let new_bark = models::NewBark {
-        filename: filename,
-        body: body,
-        slug: "test",
-        datetime: &Utc::now().naive_utc(),
-    };
-
     // TODO: Configure the number of attempts somehow?
     for _ in 0 .. 4 {
+        let new_bark = models::NewBark {
+            filename: filename,
+            body: body,
+            slug: &token_phrase::generate_slug(2, (1 .. 1000))?,
+            datetime: &Utc::now().naive_utc(),
+        };
         let res = diesel::insert_into(barks::table)
             .values(&new_bark)
             .execute(conn);

@@ -37,6 +37,7 @@ dependencies = [
  "diesel 1.0.0-beta1 (registry+https://github.com/rust-lang/crates.io-index)",
  "dotenv 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "failure 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "token_phrase 0.1.0",
 ]
 
 [[package]]
