@@ -9,6 +9,3 @@ diesel = { version = "1.0.0-beta1", features = ["sqlite", "chrono"] }
 dotenv = "0.10.1"
 failure = "0.1.1"
 token_phrase = { version = "0.1.0", path = "../token_phrase" }
-
-[replace]
-"token_phrase:0.1.0" = { path = "../token_phrase" }
