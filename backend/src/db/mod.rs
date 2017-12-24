@@ -23,29 +23,39 @@ pub fn establish_connection() -> Result<SqliteConnection, Error> {
         .map_err(|e| format_err!("Failed to open database {}: {}", database_url, e))
 }
 
-pub fn create_bark<'a>(conn: &SqliteConnection, filename: &'a str, body: &'a str) -> Result<usize, errors::DBError> {
+#[derive(Debug, PartialEq, Eq)]
+pub struct Slug {
+    pub slug: String,
+}
+
+pub fn create_bark<'a>(conn: &SqliteConnection, filename: &'a str, body: &'a str) -> Result<Slug, errors::DBError> {
     use db::schema::barks;
     use diesel::result::DatabaseErrorKind::*;
 
     // TODO: Configure the number of attempts somehow?
     for _ in 0 .. 4 {
-        let new_bark = models::NewBark {
-            filename: filename,
-            body: body,
-            slug: &token_phrase::generate_slug(2, (1 .. 1000))?,
-            datetime: &Utc::now().naive_utc(),
-        };
-        let res = diesel::insert_into(barks::table)
-            .values(&new_bark)
-            .execute(conn);
+        let slug = token_phrase::generate_slug(2, (1 .. 1000))?;
+        {
+            let new_bark = models::NewBark {
+                filename: filename,
+                body: body,
+                slug: &slug,
+                datetime: &Utc::now().naive_utc(),
+            };
+            let res = diesel::insert_into(barks::table)
+                .values(&new_bark)
+                .execute(conn);
 
-        match res {
-            Err(err) => match err {
-                DatabaseError(UniqueViolation, _) => continue,
-                err => return Err(err.into()),
-            }
-            Ok(o) => return Ok(o),
-        };
+            match res {
+                Err(err) => match err {
+                    DatabaseError(UniqueViolation, _) => continue,
+                    err => return Err(err.into()),
+                },
+                Ok(_) => (),
+            };
+        }
+
+        return Ok(Slug { slug: slug })
     }
 
     Err(errors::DBError::UniquenessSaveError)

@@ -34,8 +34,10 @@ fn create(paste: Data) -> Result<status::Created<String>, status::BadRequest<()>
     let conn = establish_connection().expect("Don't do this you idiot!");
 
     match create_bark(&conn, &filename, &body) {
-        Ok(_) => Ok(status::Created("Cool.".to_owned(), None)),
         Err(_) => Err(status::BadRequest(None)),
+        Ok(res) => {
+            Ok(status::Created("/".to_owned(), Some(res.slug)))
+        }
     }
 }
 
