@@ -19,7 +19,7 @@ fn index() -> &'static str {
           accepts raw data in the body of the request and responds with a URL of
           a page containing the body's content
 
-      GET /<id>
+      GET /b/<id>
 
           retrieves the content for the paste with id `<id>`
     "
@@ -36,7 +36,8 @@ fn create(paste: Data) -> Result<status::Created<String>, status::BadRequest<()>
     match create_bark(&conn, &filename, &body) {
         Err(_) => Err(status::BadRequest(None)),
         Ok(res) => {
-            Ok(status::Created("/".to_owned(), Some(res.slug)))
+            let url = format!("/b/{}", res.slug);
+            Ok(status::Created(url, Some(res.slug)))
         }
     }
 }
