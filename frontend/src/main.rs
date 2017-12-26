@@ -25,6 +25,11 @@ fn index() -> &'static str {
     "
 }
 
+#[get("/b/<id>")]
+fn get_bark(id: String) -> &'static str {
+    "hello"
+}
+
 #[post("/", data = "<paste>")]
 fn create(paste: Data) -> Result<status::Created<String>, status::BadRequest<()>> {
     let filename = "test.txt";
@@ -43,5 +48,5 @@ fn create(paste: Data) -> Result<status::Created<String>, status::BadRequest<()>
 }
 
 fn main() {
-    rocket::ignite().mount("/", routes![index, create]).launch();
+    rocket::ignite().mount("/", routes![index, create, get_bark]).launch();
 }

@@ -6,6 +6,9 @@ pub enum DBError {
     #[fail(display = "Failed to save to database: {}", _0)]
     SaveError(#[cause] diesel::result::Error),
 
+    #[fail(display = "Failed to load from database: {}", _0)]
+    LoadError(#[cause] diesel::result::Error),
+
     #[fail(display = "I/O error: {}", _0)]
     IOError(#[cause] std::io::Error),
 

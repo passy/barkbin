@@ -28,6 +28,15 @@ pub struct Slug {
     pub slug: String,
 }
 
+pub fn load_bark<'a>(conn: &SqliteConnection, s: &'a Slug) -> Result<models::Bark, errors::DBError> {
+    use db::schema::barks::dsl::*;
+
+    barks
+        .filter(slug.eq(&s.slug))
+        .first::<models::Bark>(conn)
+        .map_err(|e| errors::DBError::LoadError(e))
+}
+
 pub fn create_bark<'a>(conn: &SqliteConnection, filename: &'a str, body: &'a str) -> Result<Slug, errors::DBError> {
     use db::schema::barks;
     use diesel::result::DatabaseErrorKind::*;
