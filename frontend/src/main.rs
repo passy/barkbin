@@ -31,7 +31,7 @@ fn create(paste: Data) -> Result<status::Created<String>, status::BadRequest<()>
     let mut body = String::new();
     paste.open().read_to_string(&mut body).unwrap();
 
-    let conn = establish_connection().expect("Don't do this you idiot!");
+    let conn = establish_connection().map_err(|_| status::BadRequest(None))?;
 
     match create_bark(&conn, &filename, &body) {
         Err(_) => Err(status::BadRequest(None)),
