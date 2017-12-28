@@ -1,4 +1,5 @@
 extern crate token_phrase;
+extern crate barkbin_common as common;
 
 use diesel;
 use diesel::prelude::*;
@@ -8,6 +9,7 @@ use dotenv::dotenv;
 use std::env;
 use failure::{Error, err_msg};
 use chrono::Utc;
+use self::common::Slug;
 
 pub mod schema;
 pub mod models;
@@ -21,11 +23,6 @@ pub fn establish_connection() -> Result<SqliteConnection, Error> {
 
     SqliteConnection::establish(&database_url)
         .map_err(|e| format_err!("Failed to open database {}: {}", database_url, e))
-}
-
-#[derive(Debug, PartialEq, Eq)]
-pub struct Slug {
-    pub slug: String,
 }
 
 pub fn load_bark<'a>(conn: &SqliteConnection, s: &'a Slug) -> Result<models::Bark, errors::DBError> {

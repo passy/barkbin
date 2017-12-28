@@ -1,0 +1,7 @@
+[package]
+name = "barkbin_common"
+version = "0.1.0"
+authors = ["Pascal Hartig <phartig@rdrei.net>"]
+
+[dependencies]
+rocket = "0.3.5"

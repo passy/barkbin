@@ -3,8 +3,10 @@
 
 extern crate rocket;
 extern crate barkbin_backend;
+extern crate barkbin_common as common;
 
-use barkbin_backend::db::{create_bark, establish_connection};
+use barkbin_backend::db::{create_bark, establish_connection, load_bark};
+use self::common::Slug;
 use rocket::Data;
 use rocket::response::status;
 use std::io::Read;
@@ -26,8 +28,14 @@ fn index() -> &'static str {
 }
 
 #[get("/b/<id>")]
-fn get_bark(id: String) -> &'static str {
-    "hello"
+fn get_bark(id: Slug) -> Result<String, status::Custom<String>> {
+    let conn = establish_connection()
+        .map_err(|_| status::Custom(rocket::http::Status::InternalServerError, "Can't establish DB connection".into()))?;
+
+    let bark = load_bark(&conn, &id)
+        .map_err(|e| status::Custom(rocket::http::Status::NotFound, format!("Cannot load bark: {:?}", e)))?;
+
+    Ok(bark.body)
 }
 
 #[post("/", data = "<paste>")]

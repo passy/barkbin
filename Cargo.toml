@@ -3,4 +3,5 @@ members = [
     "frontend",
     "backend",
     "token_phrase",
+    "common",
 ]

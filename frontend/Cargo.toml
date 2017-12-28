@@ -7,3 +7,4 @@ authors = ["Pascal Hartig <phartig@rdrei.net>"]
 rocket = "0.3.5"
 rocket_codegen = "0.3.5"
 barkbin_backend = { version = "0.1.0", path = "../backend" }
+barkbin_common = { version = "0.1.0", path = "../common" }
